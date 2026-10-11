@@ -1,27 +1,20 @@
 # brainbridge-web
 
-Small public web tools for BrainBridge Collective, hosted with GitHub Pages and embedded in Nexudus.
+Small public web tools for BrainBridge Collective, hosted with GitHub Pages and embedded in the Nexudus member portal.
 
 Everything in this repo is public. Do not commit keys, member data, or anything private.
 
 ## Tools
 
-### parking-map
+Each tool is a folder with a self-contained `index.html`. The root `index.html` lists them.
 
-Interactive "Where to park" map near 731 E Walnut St, Pasadena.
+| Tool | URL |
+|---|---|
+| Where to park | https://seanricketts.github.io/brainbridge-web/parking-map/ |
 
-Embed in Nexudus:
+Embed in Nexudus with an Iframe block pointing at the tool URL (parking map: height about 1150px).
 
-```html
-<div id="bb-parking-root"></div>
-<script src="https://seanricketts.github.io/brainbridge-web/parking-map/parking-map.js"></script>
-```
+## Light/dark theme
 
-Or as an iframe:
-
-```html
-<iframe src="https://seanricketts.github.io/brainbridge-web/parking-map/parking-map.html"
-        style="width:100%;height:900px;border:0" title="Where to park"></iframe>
-```
-
-To change spots, edit the `SPOTS` list in `parking-map.js` (and the same list in `parking-map.html`).
+Tools default to dark. Add `?theme=light` or `?theme=dark` to the URL, or have the portal send
+`{ type: 'bb-theme', theme: 'light' | 'dark' }` via `postMessage` to follow the portal's toggle.

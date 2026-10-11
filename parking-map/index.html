@@ -26,6 +26,19 @@
     --c-unknown: #6FA3C7;
     --c-street: #C98BD1;
   }
+  /* Light theme: values follow Bootstrap light neutrals (brand.md only defines dark). */
+  :root[data-theme="light"] {
+    --bb-primary-hover: #435A4D;
+    --bb-bg: #FFFFFF;
+    --bb-surface: #F8F9FA;
+    --bb-border: #DEE2E6;
+    --bb-heading: #191B1D;
+    --bb-text: #495057;
+    --bb-text-2: #343A40;
+    --c-public: #3F7A5B;
+  }
+  :root[data-theme="light"] .bb-tiles { filter: none; }
+  :root[data-theme="light"] .bb-foot a { color: var(--bb-primary); }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bb-bg); }
   .bb-parking { font-family: 'Poppins', system-ui, sans-serif; color: var(--bb-text); background: var(--bb-bg); padding: 16px; max-width: 1200px; margin: 0 auto; }
@@ -89,6 +102,22 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function () {
+  /* ---- Theme (light/dark) --------------------------------------------
+   * Default is dark. ?theme=light|dark in the URL sets the first paint, then
+   * the parent portal page can change it with messages: {type:'bb-theme', theme:'light'|'dark'}.
+   * We ask the parent for the current theme on load with {type:'bb-ready'}.
+   * ------------------------------------------------------------------ */
+  function setTheme(t) {
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  }
+  var qs = /[?&]theme=(light|dark)\b/.exec(location.search);
+  setTheme(qs ? qs[1] : 'dark');
+  window.addEventListener('message', function (e) {
+    if (e.source !== window.parent || !e.data || e.data.type !== 'bb-theme') return;
+    setTheme(e.data.theme);
+  });
+  if (window.parent !== window) window.parent.postMessage({ type: 'bb-ready' }, '*');
+
   /* ------------------------------------------------------------------
    * EDIT HERE. Everything the map shows comes from the two lists below.
    *
