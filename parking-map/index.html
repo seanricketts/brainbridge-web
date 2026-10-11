@@ -20,22 +20,34 @@
     --bb-text: #B0B0B8;
     --bb-text-2: #C5C6CC;
     --bb-radius: 16px;
-    --c-public: #7FB095;
+    --bb-accent: #7FB095;
+    --c-public: #6FA3C7;
     --c-customers: #E0B15A;
     --c-restricted: #8A8D96;
-    --c-unknown: #6FA3C7;
+    --c-unknown: #E07A9B;
+    --c-members: #5CC8C2;
     --c-street: #C98BD1;
+    --c-transit: #FF8A65;
+    --on-c: #111111;
   }
   /* Light theme: values follow Bootstrap light neutrals (brand.md only defines dark). */
   :root[data-theme="light"] {
     --bb-primary-hover: #435A4D;
     --bb-bg: #FFFFFF;
     --bb-surface: #F8F9FA;
-    --bb-border: #DEE2E6;
+    --bb-border: #8A9099;
     --bb-heading: #191B1D;
     --bb-text: #495057;
     --bb-text-2: #343A40;
-    --c-public: #3F7A5B;
+    --bb-accent: #2F7A55;
+    --c-public: #2F6FA3;
+    --c-customers: #9A6700;
+    --c-restricted: #6B6F78;
+    --c-members: #0F7F7A;
+    --c-unknown: #B83E6A;
+    --c-street: #9A4FA6;
+    --c-transit: #B5451B;
+    --on-c: #FFFFFF;
   }
   :root[data-theme="light"] .bb-tiles { filter: none; }
   :root[data-theme="light"] .bb-foot a { color: var(--bb-primary); }
@@ -48,7 +60,7 @@
   .bb-chip { font: inherit; font-size: .8rem; color: var(--bb-text-2); background: transparent; border: 1px solid var(--bb-border); border-radius: 999px; padding: 6px 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
   .bb-chip[aria-pressed="true"] { background: var(--bb-primary); border-color: var(--bb-primary); color: #fff; }
   .bb-chip:hover { border-color: var(--bb-primary); }
-  .bb-chip:focus-visible, .bb-item:focus-visible, .bb-btn:focus-visible { outline: 2px solid var(--c-public); outline-offset: 2px; }
+  .bb-chip:focus-visible, .bb-item:focus-visible, .bb-btn:focus-visible { outline: 2px solid var(--bb-accent); outline-offset: 2px; }
   .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
   .bb-grid { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
   #bb-map { height: 600px; border-radius: var(--bb-radius); border: 1px solid var(--bb-border); background: var(--bb-surface); }
@@ -58,13 +70,13 @@
   .bb-item .t { display: flex; align-items: center; gap: 8px; color: var(--bb-heading); font-weight: 500; font-size: .95rem; }
   .bb-item .m { font-size: .8rem; margin-top: 2px; }
   .bb-item .n { font-size: .8rem; margin-top: 6px; color: var(--bb-text-2); }
-  .letter { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #111; font-weight: 600; font-size: .75rem; flex: none; }
+  .letter { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--on-c); font-weight: 600; font-size: .75rem; flex: none; }
   .bb-btn { display: inline-block; margin-top: 8px; font: inherit; font-size: .8rem; font-weight: 500; color: #fff; background: var(--bb-primary); border: 0; border-radius: var(--bb-radius); padding: 7px 16px; text-decoration: none; cursor: pointer; }
   .bb-btn:hover { background: var(--bb-primary-hover); }
   .bb-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: .78rem; }
   .bb-legend span { display: inline-flex; align-items: center; gap: 6px; }
   .bb-foot { margin-top: 12px; font-size: .75rem; opacity: .85; }
-  .bb-foot a { color: var(--c-public); }
+  .bb-foot a { color: var(--bb-accent); }
   .bb-empty { padding: 16px; font-size: .85rem; }
   /* Leaflet popup, dark */
   .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--bb-surface); color: var(--bb-text); border: 1px solid var(--bb-border); border-radius: 12px; }
@@ -109,6 +121,7 @@
    * ------------------------------------------------------------------ */
   function setTheme(t) {
     if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    if (window.bbRestyle) window.bbRestyle();
   }
   var qs = /[?&]theme=(light|dark)\b/.exec(location.search);
   setTheme(qs ? qs[1] : 'dark');
@@ -155,15 +168,19 @@
   ];
 
   /* ---------------------------- rendering --------------------------- */
-  var KINDS = { lot: 'Lots', garage: 'Garages', street: 'Street parking' };
+  var KINDS = { lot: 'Lots & garages', street: 'Street parking', transit: 'Transit' };
+  function grp(s) { return s.kind === 'garage' ? 'lot' : s.kind; }
+  // Not parking: the nearest Metro stop, for people who would rather ride in.
+  SPOTS.push({ id: 'metro-lake', kind: 'transit', name: 'Metro A Line: Lake Station', point: [34.1519, -118.1324],
+    notes: 'Light rail to Pasadena, Downtown LA and Long Beach. Check Metro for current service and any paid station parking.' });
   var ACCESS = {
-    public:     { label: 'Public',            color: '#7FB095' },
-    customers:  { label: 'Customers only',    color: '#E0B15A' },
-    restricted: { label: 'Permit / private',  color: '#8A8D96' },
-    members:    { label: 'Members (monthly permit)', color: '#5CC8C2' },
-    unknown:    { label: 'Rules not yet confirmed', color: '#6FA3C7' }
+    public:     { label: 'Public',            color: 'var(--c-public)' },
+    customers:  { label: 'Customers only',    color: 'var(--c-customers)' },
+    restricted: { label: 'Permit / private',  color: 'var(--c-restricted)' },
+    members:    { label: 'Members (monthly permit)', color: 'var(--c-members)' },
+    unknown:    { label: 'Rules not yet confirmed', color: 'var(--c-unknown)' }
   };
-  var STREET_COLOR = '#C98BD1';
+  var STREET_COLOR = 'var(--c-street)';
   // OSM "private"/"permit" -> restricted
   SPOTS.forEach(function (s) { if (s.access === 'private' || s.access === 'permit') s.access = 'restricted'; });
 
@@ -173,7 +190,9 @@
     p.forEach(function (c) { la += c[0]; lo += c[1]; });
     return [la / p.length, lo / p.length];
   }
-  function colorOf(s) { return s.kind === 'street' ? STREET_COLOR : ACCESS[s.access].color; }
+  function colorOf(s) { return s.kind === 'street' ? STREET_COLOR : s.kind === 'transit' ? 'var(--c-transit)' : ACCESS[s.access].color; }
+  // Leaflet draws SVG attributes, which can't use var(); resolve to the current theme's value.
+  function realColor(c) { var m = /^var\((--[\w-]+)\)$/.exec(c); return m ? getComputedStyle(document.documentElement).getPropertyValue(m[1]).trim() : c; }
 
   // letters in nearest-first order
   SPOTS.forEach(function (s) { s._c = center(s); s._d = s.dist != null ? s.dist : Math.round(L.latLng(s._c).distanceTo([BUILDING.lat, BUILDING.lng])); });
@@ -181,7 +200,7 @@
   SPOTS.sort(function (a, b) { return ((a.kind === "street") - (b.kind === "street")) || (a._d - b._d); });
   var nLetter = 0;
   SPOTS.forEach(function (s) {
-    s._letter = s.kind === "street" ? "" : String.fromCharCode(65 + (nLetter++ % 26));
+    s._letter = s.kind === "street" ? "" : s.kind === "transit" ? "M" : String.fromCharCode(65 + (nLetter++ % 26));
     s._title = s.name || ((s.kind === "garage" ? "Parking garage " : s.kind === "street" ? "Street parking" : "Parking lot ") + s._letter);
   });
 
@@ -189,8 +208,8 @@
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function details(s) {
     var bits = [];
-    if (s.kind === 'street') bits.push('Street parking'); else bits.push(s.kind === 'garage' ? 'Garage' : 'Lot');
-    if (s.kind !== 'street') bits.push(ACCESS[s.access].label);
+    if (s.kind === 'street') bits.push('Street parking'); else if (s.kind === 'transit') bits.push('Transit (not parking)'); else bits.push(s.kind === 'garage' ? 'Garage' : 'Lot');
+    if (s.kind !== 'street' && s.kind !== 'transit') bits.push(ACCESS[s.access].label);
     if (s.fee) bits.push(s.fee);
     if (s.capacity) bits.push(s.capacity + ' spaces');
     if (s.hours) bits.push(s.hours);
@@ -203,7 +222,7 @@
     if (!l || !/^https?:\/\//.test(l.url)) return '';
     return ' <a class="bb-btn" target="_blank" rel="noopener" href="' + esc(l.url) + '">' + esc(l.label || 'More info') + '</a>';
   }
-  function dirUrl(s) { return 'https://www.google.com/maps/dir/?api=1&destination=' + s._c[0].toFixed(6) + ',' + s._c[1].toFixed(6) + '&travelmode=driving'; }
+  function dirUrl(s) { return 'https://www.google.com/maps/dir/?api=1&destination=' + s._c[0].toFixed(6) + ',' + s._c[1].toFixed(6) + '&travelmode=' + (s.kind === 'transit' ? 'walking' : 'driving'); }
 
   var map = L.map('bb-map', { scrollWheelZoom: false }).setView([BUILDING.lat, BUILDING.lng], 17);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -219,11 +238,11 @@
     title: BUILDING.name, zIndexOffset: 1000
   }).addTo(map).bindPopup('<b>' + esc(BUILDING.name) + '</b><br>731 E Walnut St');
 
-  var active = { lot: true, garage: true, street: true };
+  var active = { lot: true, street: true, transit: true };
   var layers = {}, group = L.featureGroup().addTo(map);
 
   SPOTS.forEach(function (s) {
-    var col = colorOf(s), g;
+    var col = realColor(colorOf(s)), g;
     if (s.kind === 'street') g = L.polyline(s.line, { color: col, weight: 6, opacity: .85 });
     else if (s.point) g = L.circle(s.point, { radius: 25, color: col, weight: 2, fillColor: col, fillOpacity: .35 });
     else g = L.polygon(s.poly, { color: col, weight: 2, fillColor: col, fillOpacity: .35, dashArray: s.access === 'unknown' ? '5 4' : null });
@@ -233,12 +252,17 @@
       (s.enterFrom ? '<br>Enter: ' + esc(s.enterFrom) : '') + (s.ev ? '<br>EV charging: ' + esc(s.ev) : '') + (s.notes ? '<br>' + esc(s.notes) : '') + '<br><a class="bb-btn" target="_blank" rel="noopener" href="' + dirUrl(s) + '">Directions</a>' + linkBtn(s);
     g.bindPopup(html); if (tag) tag.bindPopup(html);
     g.on('click', function () { select(s, false); }); if (tag) tag.on('click', function () { select(s, false); });
-    s._layer = layer; s._popup = g; layers[s.id] = s;
+    s._layer = layer; s._popup = g; s._vec = g; layers[s.id] = s;
   });
+
+  window.bbRestyle = function () {
+    SPOTS.forEach(function (s) { if (s._vec) { var c = realColor(colorOf(s)); s._vec.setStyle({ color: c, fillColor: c }); } });
+  };
+  window.bbRestyle();
 
   var listEl = document.getElementById('bb-list');
   function renderList() {
-    var shown = SPOTS.filter(function (s) { return active[s.kind]; });
+    var shown = SPOTS.filter(function (s) { return active[grp(s)]; });
     listEl.innerHTML = shown.length ? '' : '<div class="bb-empty">Nothing to show for this filter.</div>';
     shown.forEach(function (s) {
       var b = document.createElement('button');
@@ -249,7 +273,7 @@
       listEl.appendChild(b);
     });
     SPOTS.forEach(function (s) {
-      if (active[s.kind]) group.addLayer(s._layer); else group.removeLayer(s._layer);
+      if (active[grp(s)]) group.addLayer(s._layer); else group.removeLayer(s._layer);
     });
   }
 
@@ -266,7 +290,7 @@
   // filters (street chip only appears once street data exists)
   var fEl = document.getElementById('bb-filters');
   Object.keys(KINDS).forEach(function (k) {
-    if (!SPOTS.some(function (s) { return s.kind === k; })) { active[k] = false; return; }
+    if (!SPOTS.some(function (s) { return grp(s) === k; })) { active[k] = false; return; }
     var c = document.createElement('button');
     c.type = 'button'; c.className = 'bb-chip'; c.setAttribute('aria-pressed', 'true'); c.textContent = KINDS[k];
     c.addEventListener('click', function () {
@@ -277,8 +301,9 @@
 
   // legend
   var lg = document.getElementById('bb-legend'), used = {};
-  SPOTS.forEach(function (s) { used[s.kind === 'street' ? 'street' : s.access] = true; });
+  SPOTS.forEach(function (s) { used[s.kind === 'street' ? 'street' : s.kind === 'transit' ? 'transit' : s.access] = true; });
   Object.keys(ACCESS).forEach(function (k) { if (used[k]) lg.insertAdjacentHTML('beforeend', '<span><i class="dot" style="background:' + ACCESS[k].color + '"></i>' + ACCESS[k].label + '</span>'); });
+  if (used.transit) lg.insertAdjacentHTML('beforeend', '<span><i class="dot" style="background:' + 'var(--c-transit)' + '"></i>Metro station</span>');
   if (used.street) lg.insertAdjacentHTML('beforeend', '<span><i class="dot" style="background:' + STREET_COLOR + '"></i>Street parking</span>');
   lg.insertAdjacentHTML('beforeend', '<span><i class="dot" style="background:#526D5E;border:1px solid #fff"></i>BrainBridge</span>');
 
