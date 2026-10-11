@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- NOTE: this page is shown in an iframe on the BrainBridge Nexudus member portal. Keep it responsive (375-1400px), no 100vh, and external links target _blank. -->
 <title>Parking near BrainBridge Collective</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -180,6 +181,7 @@
     maxZoom: 19, className: 'bb-tiles',
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
+  map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
   map.on('focus', function () { map.scrollWheelZoom.enable(); });
   map.on('blur', function () { map.scrollWheelZoom.disable(); });
 

@@ -7,6 +7,7 @@
  *   <script src="parking-map.js"></script>
  * If no #bb-parking-root exists, the map is inserted right after the <script> tag.
  *
+ * Shown inside an iframe on the BrainBridge Nexudus portal (via index.html), so it stays responsive and its links open in a new tab.
  * Generated from parking-map.html. To change spots, edit the SPOTS list below.
  */
 (function () {
@@ -212,6 +213,7 @@
       maxZoom: 19, className: 'bb-tiles',
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+    map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
     map.on('focus', function () { map.scrollWheelZoom.enable(); });
     map.on('blur', function () { map.scrollWheelZoom.disable(); });
 
