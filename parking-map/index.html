@@ -27,7 +27,7 @@
     --c-unknown: #E07A9B;
     --c-members: #5CC8C2;
     --c-street: #C98BD1;
-    --c-transit: #FF8A65;
+    --c-transit: #F2F2F2;
     --on-c: #111111;
   }
   /* Light theme: values follow Bootstrap light neutrals (brand.md only defines dark). */
@@ -46,7 +46,7 @@
     --c-members: #0F7F7A;
     --c-unknown: #B83E6A;
     --c-street: #9A4FA6;
-    --c-transit: #B5451B;
+    --c-transit: #191B1D;
     --on-c: #FFFFFF;
   }
   :root[data-theme="light"] .bb-tiles { filter: none; }
@@ -154,13 +154,14 @@
   { id: 'osm-502738485', name: '155 N Lake Garage', kind: 'garage', access: 'public', fee: null, hours: '24/7', capacity: null, ev: 'yes', enterFrom: null, notes: 'Indoor self-park. No oversize vehicles. No in-and-out: one entry and one exit only. Cash or card. Motorcycle parking. Rates not published online. Phone (626) 304-9689.', links: [{ url: 'https://go.lazparking.com/buynow?l=6690', label: 'LAZ Parking page' }], dist: 260, poly: [[34.148235,-118.133267],[34.148226,-118.133267],[34.148226,-118.133761],[34.148851,-118.133762],[34.14885,-118.133267],[34.1488,-118.133268],[34.1488,-118.133219],[34.148267,-118.133218],[34.148267,-118.133148],[34.14826,-118.133142],[34.14826,-118.133112],[34.148267,-118.133112],[34.148267,-118.132954],[34.148235,-118.132954],[34.148235,-118.133267]] },
   { id: 'propark-301-n-lake', name: '301 N Lake Garage', kind: 'garage', access: 'public', fee: '$1.25 per 15 min, $12.50 daily max', hours: 'Daily 7am-7pm', capacity: null, ev: 'no', enterFrom: 'North side of Locust St, between N Lake Ave and N Hudson Ave', notes: 'Covered self-park, no height limit. No in-and-out. Pay with the ParkChirp app; license plate required at entry.', links: [{ url: 'https://www.propark.com/facilities/301-n-lake-ave-parking/', label: 'Propark page' }], dist: 287, point: [34.1508655,-118.132881] },
   { id: 'gmaps-650-walnut', name: 'Public Parking - 650 Walnut', kind: 'lot', access: 'public', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: 'Rates and hours not yet confirmed. Check posted signs.', links: [{ url: 'https://www.google.com/maps/search/?api=1&query=34.14974,-118.137099', label: 'View on Google Maps' }], dist: 136, point: [34.14974,-118.1370987] },
-  { id: 'street-el-molino-east-walnut-street-locust-street', name: 'El Molino: Walnut to Locust', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: 'No parking anytime.', dist: null, line: [[34.14958,-118.1369243],[34.1496844,-118.1369245],[34.1499595,-118.1369219],[34.1500943,-118.1369233],[34.150483,-118.136928]] },
+  { id: 'street-el-molino-east-walnut-street-locust-street', name: 'El Molino: Walnut to Locust', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: 'East side: 2 hr parking. West side: no parking anytime.', dist: null, line: [[34.14958,-118.1369243],[34.1496844,-118.1369245],[34.1499595,-118.1369219],[34.1500943,-118.1369233],[34.150483,-118.136928]] },
+  { id: 'street-el-molino-locust-street-east-corson-street', name: 'El Molino: Locust to Corson', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking.', dist: null, line: [[34.150483,-118.136928],[34.1506431,-118.1369282],[34.1508544,-118.1369291],[34.1509362,-118.1368718],[34.1511477,-118.1368667],[34.1511707,-118.1368662],[34.1512537,-118.1368642]] },
   { id: 'street-el-molino-east-union-street-east-walnut-street', name: 'El Molino: Union to Walnut', kind: 'street', access: 'unknown', fee: '$1/hr at meters', hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking 9am-6pm; some stretches are no parking (7am-6pm or anytime). Street cleaning: Friday.', dist: null, line: [[34.1472483,-118.1369053],[34.1473641,-118.136909],[34.1473904,-118.1369073],[34.1475337,-118.1369034],[34.1476943,-118.1369025],[34.1477836,-118.1369027],[34.147931,-118.1369055],[34.1479845,-118.1369048],[34.1481965,-118.1369069],[34.148705,-118.1369149],[34.1487352,-118.1369152],[34.1489956,-118.1369156],[34.1494558,-118.1369224],[34.14958,-118.1369243]] },
   { id: 'street-hudson-locust-street-east-corson-street', name: 'Hudson: Locust to Corson', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '4 hr parking. Street cleaning: Monday.', dist: null, line: [[34.1504932,-118.1346691],[34.1505622,-118.1346696],[34.1508105,-118.1346684],[34.1511582,-118.1346682],[34.1511803,-118.1346682],[34.1512573,-118.1346681]] },
-  { id: 'street-hudson-east-walnut-street-locust-street', name: 'Hudson: Walnut to Locust', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: 'East side: 4 hr parking 7am-6pm except Sundays, once per day per block. West side: 1 hr parking 7am-6pm except Sundays, once per day per block. No parking 2am-6am. Street cleaning: Monday. Zone 6295 permit holders exempt from the time limits.', dist: null, line: [[34.1495821,-118.1346521],[34.1496714,-118.1346562],[34.1496987,-118.1346574],[34.1504176,-118.134668],[34.1504932,-118.1346691]] },
+  { id: 'street-hudson-east-walnut-street-locust-street', name: 'Hudson: Walnut to Locust', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: 'East side: 4 hr parking 7am-6pm except Sundays, once per day per block. West side: 1 hr parking 7am-6pm except Sundays, once per day per block. No parking 2am-6am. Street cleaning: Monday.', dist: null, line: [[34.1495821,-118.1346521],[34.1496714,-118.1346562],[34.1496987,-118.1346574],[34.1504176,-118.134668],[34.1504932,-118.1346691]] },
   { id: 'street-hudson-east-union-street-east-walnut-street', name: 'Hudson: Union to Walnut', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking; some stretches are no stopping. Street cleaning: Friday.', dist: null, line: [[34.1477901,-118.1338973],[34.1478584,-118.1339028],[34.1482115,-118.1338948],[34.1487721,-118.1338979],[34.1494797,-118.1339017],[34.1495873,-118.1339023],[34.1495867,-118.1340169],[34.1495821,-118.1346521]] },
-  { id: 'street-locust-north-el-molino-avenue-north-hudson-avenue', name: 'Locust: El Molino to Hudson', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking 7am-6pm on the south side only; no parking on the north side. Street cleaning: 1st and 3rd Monday 8am-12pm (tow-away). Permit zone 6295.', dist: null, line: [[34.150483,-118.136928],[34.1504836,-118.1368279],[34.1504839,-118.1367788],[34.1504905,-118.1356759],[34.1504913,-118.1354987],[34.1504924,-118.1352528],[34.1504931,-118.1347599],[34.1504932,-118.1346691]] },
-  { id: 'street-locust-north-hudson-avenue-north-lake-avenue', name: 'Locust: Hudson to Lake', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '1 hr parking 7am-6pm except Sundays, once per day per block; no parking 2am-6am; no parking on the south side. Street cleaning: Monday. Permit zone 6295 holders exempt from the 1 hr limit.', dist: null, line: [[34.1504932,-118.1346691],[34.1504954,-118.1345837],[34.150497,-118.1340453],[34.150497,-118.1340298],[34.1504982,-118.1336395],[34.1505001,-118.1329896],[34.1505014,-118.1325725],[34.1505017,-118.1324639]] },
+  { id: 'street-locust-north-el-molino-avenue-north-hudson-avenue', name: 'Locust: El Molino to Hudson', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking 7am-6pm on the north side only; no parking on the south side. Street cleaning: 1st and 3rd Monday 8am-12pm (tow-away).', dist: null, line: [[34.150483,-118.136928],[34.1504836,-118.1368279],[34.1504839,-118.1367788],[34.1504905,-118.1356759],[34.1504913,-118.1354987],[34.1504924,-118.1352528],[34.1504931,-118.1347599],[34.1504932,-118.1346691]] },
+  { id: 'street-locust-north-hudson-avenue-north-lake-avenue', name: 'Locust: Hudson to Lake', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '1 hr parking 7am-6pm except Sundays, once per day per block; no parking 2am-6am; no parking on the south side. Street cleaning: Monday.', dist: null, line: [[34.1504932,-118.1346691],[34.1504954,-118.1345837],[34.150497,-118.1340453],[34.150497,-118.1340298],[34.1504982,-118.1336395],[34.1505001,-118.1329896],[34.1505014,-118.1325725],[34.1505017,-118.1324639]] },
   { id: 'street-oak-knoll-east-union-street-east-walnut-street', name: 'Oak Knoll: Union to Walnut', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking 9am-6pm; some stretches are no parking anytime. Street cleaning: Friday.', dist: null, line: [[34.1477529,-118.1352969],[34.1478421,-118.1353631],[34.1478656,-118.1353791],[34.1478951,-118.1353779],[34.1482394,-118.1353818],[34.1483391,-118.135382],[34.1488541,-118.1353617],[34.1494541,-118.1353842],[34.1494914,-118.1353856],[34.1495784,-118.1353852]] },
   { id: 'street-walnut-north-oak-knoll-avenue-north-el-molino-avenue', name: 'Walnut: Oak Knoll to El Molino', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking 9am-6pm. Street cleaning: Monday.', dist: null, line: [[34.1495784,-118.1353852],[34.1495783,-118.1357133],[34.149579,-118.1366636],[34.1495797,-118.1368439],[34.14958,-118.1369243]] },
   { id: 'street-walnut-north-hudson-avenue-north-oak-knoll-avenue', name: 'Walnut: Hudson to Oak Knoll', kind: 'street', access: 'unknown', fee: null, hours: null, capacity: null, ev: null, enterFrom: null, notes: '2 hr parking 9am-6pm. Street cleaning: Monday.', dist: null, line: [[34.1495821,-118.1346521],[34.1495784,-118.1353852]] },
@@ -289,13 +290,22 @@
 
   // filters (street chip only appears once street data exists)
   var fEl = document.getElementById('bb-filters');
+  // clicking a chip shows only that type; clicking it again shows everything
+  var chips = {};
   Object.keys(KINDS).forEach(function (k) {
     if (!SPOTS.some(function (s) { return grp(s) === k; })) { active[k] = false; return; }
     var c = document.createElement('button');
     c.type = 'button'; c.className = 'bb-chip'; c.setAttribute('aria-pressed', 'true'); c.textContent = KINDS[k];
     c.addEventListener('click', function () {
-      active[k] = !active[k]; c.setAttribute('aria-pressed', String(active[k])); renderList();
+      var keys = Object.keys(chips);
+      var solo = active[k] && keys.every(function (o) { return o === k ? true : !active[o]; });
+      keys.forEach(function (o) {
+        active[o] = solo ? true : o === k;
+        chips[o].setAttribute('aria-pressed', String(active[o]));
+      });
+      renderList();
     });
+    chips[k] = c;
     fEl.appendChild(c);
   });
 
